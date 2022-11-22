@@ -2,12 +2,14 @@ server:
   port: 8090
 spring:
   rabbitmq:
-    host: rabbit-mq
+    host: localhost
   application:
     name: order-service
 eureka:
+  instance:
+    hostname: localhost
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://discovery-service:8761/eureka/
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/

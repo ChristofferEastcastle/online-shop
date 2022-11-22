@@ -14,12 +14,11 @@ spring:
             - Path=/api/payment/**
 server:
   port: 8080
-
 eureka:
   instance:
-    hostname: discovery-service
+    hostname: localhost
   client:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://discovery-service:8761/eureka/
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
