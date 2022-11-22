@@ -1,0 +1,7 @@
+server:
+  port: 8091
+spring:
+  rabbitmq:
+    host: localhost
+  application:
+    name: payment-service
