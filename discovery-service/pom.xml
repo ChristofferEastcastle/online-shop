@@ -8,7 +8,7 @@
         <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>no.jlwcrews</groupId>
+    <groupId>no.onlineshop</groupId>
     <artifactId>discovery-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>discovery-service</name>
