@@ -5,6 +5,15 @@ spring:
     host: localhost
   application:
     name: order-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order_service
+    username: postgres
+    password: postgres123
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
 eureka:
   instance:
     hostname: localhost

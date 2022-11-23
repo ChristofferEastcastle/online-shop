@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+
+set -xe
+
 mvn package
 SERVICE=discovery-service
 docker build -t $SERVICE -f $SERVICE/Dockerfile $SERVICE
