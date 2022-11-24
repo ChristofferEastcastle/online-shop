@@ -6,7 +6,6 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import no.onlineshop.paymentservice.models.PaymentCreateDto
-import no.onlineshop.paymentservice.models.PaymentEntity
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -16,9 +15,10 @@ import org.springframework.context.ApplicationContextInitializer
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.context.event.ContextClosedEvent
-import org.springframework.core.env.Environment
 import org.springframework.http.MediaType
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
@@ -30,12 +30,11 @@ import org.springframework.web.client.RestTemplate
 @ContextConfiguration(initializers = [WireMockContextInitializer::class])
 @WireMockTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 class PaymentServiceTest {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
-
-    @Autowired private lateinit var env: Environment
 
     private val paymentEndpoint = "/api/payment"
 
@@ -90,10 +89,11 @@ class WireMockContextInitializer : ApplicationContextInitializer<ConfigurableApp
             .applyTo(applicationContext)
     }
 
-    companion object{
+    companion object {
         @Configuration
-        class TestConfig{
+        class TestConfig {
             @Bean
+            @Profile("test")
             fun restTemplate(): RestTemplate = RestTemplate()
         }
     }
