@@ -14,6 +14,8 @@ class OrderServiceApplication {
     fun restTemplate(): RestTemplate? {
         return RestTemplate()
     }
+
+
 }
 
 fun main(args: Array<String>) {
