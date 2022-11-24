@@ -1,31 +1,22 @@
 package no.onlineshop.paymentservice.controller
 
-import no.onlineshop.paymentservice.integration.RabbitSender
+import no.onlineshop.paymentservice.models.PaymentCreateDto
+import no.onlineshop.paymentservice.models.PaymentEntity
+import no.onlineshop.paymentservice.services.PaymentHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/payment")
-class PaymentController(@Autowired private val rabbitSender: RabbitSender) {
+class PaymentController(@Autowired private val paymentHandler: PaymentHandler) {
 
     @GetMapping
-    fun getPaymentHello(): ResponseEntity<String> {
-        return ResponseEntity.ok("Hello, from Payment Service")
+    fun fetchAllPayments(): ResponseEntity<List<PaymentEntity>> {
+        return ResponseEntity.ok(paymentHandler.fetchAllPayments())
     }
-
-    @PostMapping("/{message}")
-    fun createPaymentMessage(@PathVariable message: String) {
-        rabbitSender.sendMessage(message)
-    }
-
-    @GetMapping("/http/{message}")
-    fun responseToOrderService(@PathVariable message: String): ResponseEntity<String> {
-        println(message)
-        return ResponseEntity.ok("Hello from payment service, thank you for your request")
+    @PostMapping
+    fun postPayment(@RequestBody paymentCreateDto: PaymentCreateDto): ResponseEntity<PaymentEntity> {
+        return ResponseEntity.ok(paymentHandler.createPayment(paymentCreateDto))
     }
 }

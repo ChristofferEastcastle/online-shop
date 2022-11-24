@@ -19,7 +19,7 @@ class OrderController(
     }
 
     @PostMapping
-    fun postNewOrder(@RequestBody newOrder: OrderPostDto){
-        orderHandler.addNewOrder(newOrder)
+    fun postNewOrder(@RequestBody newOrder: OrderPostDto): ResponseEntity<OrderEntity>{
+        return ResponseEntity.ok(orderHandler.addNewOrder(newOrder))
     }
 }

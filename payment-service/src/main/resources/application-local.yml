@@ -5,6 +5,18 @@ spring:
     host: localhost
   application:
     name: payment-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_service
+    username: postgres
+    password: postgres123
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+    show-sql: true
+  flyway:
+    enabled: false
 eureka:
   instance:
     hostname: localhost

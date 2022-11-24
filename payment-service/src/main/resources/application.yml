@@ -5,6 +5,15 @@ spring:
     host: rabbit-mq
   application:
     name: payment-service
+  datasource:
+    url: jdbc:postgresql://database:5432/payment_service
+    username: postgres
+    password: postgres123
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
 eureka:
   client:
     registerWithEureka: true

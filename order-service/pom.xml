@@ -15,7 +15,7 @@
     <description>order-service</description>
     <properties>
         <java.version>11</java.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.6.10</kotlin.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
     </properties>
     <repositories>
@@ -119,13 +119,21 @@
                         <arg>-Xjsr305=strict</arg>
                     </args>
                     <compilerPlugins>
+                        <plugin>all-open</plugin>
                         <plugin>spring</plugin>
+                        <plugin>no-arg</plugin>
+                        <plugin>jpa</plugin>
                     </compilerPlugins>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
                         <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
                         <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
