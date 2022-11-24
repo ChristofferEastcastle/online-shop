@@ -22,4 +22,12 @@ class OrderController(
     fun postNewOrder(@RequestBody newOrder: OrderPostDto): ResponseEntity<OrderEntity>{
         return ResponseEntity.ok(orderHandler.addNewOrder(newOrder))
     }
+
+    @GetMapping("{id}/exists")
+    fun orderExists(@PathVariable id: Long): ResponseEntity<Any> {
+        return when(orderHandler.orderExists(id)){
+            true -> ResponseEntity.ok().build()
+            false -> ResponseEntity.notFound().build()
+        }
+    }
 }

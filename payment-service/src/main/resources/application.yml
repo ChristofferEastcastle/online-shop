@@ -1,3 +1,6 @@
+app:
+  order-service:
+    baseurl: http://order-service
 server:
   port: 8091
 spring:

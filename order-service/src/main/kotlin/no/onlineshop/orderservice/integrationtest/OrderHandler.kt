@@ -31,6 +31,10 @@ class OrderHandler(
         }
         throw OrderException("Could not store order")
     }
+
+    fun orderExists(id: Long): Boolean {
+        return orderRepository.existsById(id)
+    }
 }
 
 data class Message(

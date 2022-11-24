@@ -1,3 +1,6 @@
+app:
+  order-service:
+    baseurl: http://localhost:8080
 server:
   port: 8091
 spring:
