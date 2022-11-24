@@ -1,4 +1,4 @@
-package no.onlineshop.orderservice.services
+package no.onlineshop.orderservice.integrationtest
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.onlineshop.orderservice.exceptions.OrderException

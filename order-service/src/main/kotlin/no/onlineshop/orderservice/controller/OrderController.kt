@@ -2,7 +2,7 @@ package no.onlineshop.orderservice.controller
 
 import no.onlineshop.orderservice.models.OrderEntity
 import no.onlineshop.orderservice.models.OrderPostDto
-import no.onlineshop.orderservice.services.OrderHandler
+import no.onlineshop.orderservice.integrationtest.OrderHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

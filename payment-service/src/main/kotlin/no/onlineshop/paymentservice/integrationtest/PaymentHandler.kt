@@ -1,4 +1,4 @@
-package no.onlineshop.paymentservice.services
+package no.onlineshop.paymentservice.integrationtest
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.onlineshop.paymentservice.models.Action

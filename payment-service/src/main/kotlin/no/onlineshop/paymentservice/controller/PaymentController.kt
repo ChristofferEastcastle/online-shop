@@ -2,7 +2,7 @@ package no.onlineshop.paymentservice.controller
 
 import no.onlineshop.paymentservice.models.PaymentCreateDto
 import no.onlineshop.paymentservice.models.PaymentEntity
-import no.onlineshop.paymentservice.services.PaymentHandler
+import no.onlineshop.paymentservice.integrationtest.PaymentHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

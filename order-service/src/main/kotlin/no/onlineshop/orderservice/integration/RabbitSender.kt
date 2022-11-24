@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 class RabbitSender(@Autowired private val rabbitTemplate: RabbitTemplate) {
 
     fun sendMessage(message: String) {
+        println("sending message: $message")
         rabbitTemplate.convertAndSend("order_queue", message)
     }
-
 }

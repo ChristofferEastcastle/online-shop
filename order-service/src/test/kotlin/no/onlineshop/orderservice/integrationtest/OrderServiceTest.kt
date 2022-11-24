@@ -1,9 +1,8 @@
-package no.onlineshop.orderservice.services
+package no.onlineshop.orderservice.integrationtest
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.onlineshop.orderservice.models.OrderEntity
 import no.onlineshop.orderservice.models.OrderPostDto
-import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -15,12 +14,12 @@ import org.springframework.test.web.servlet.post
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class OrderHandlerTest {
+class OrderServiceTest {
 
-    @Autowired private lateinit var mockMvc: MockMvc
+    @Autowired
+    private lateinit var mockMvc: MockMvc
 
     @Test
-    @Order(1)
     fun addOrderTest() {
         val order = OrderPostDto("phone", 1, 1)
         val expected = OrderEntity(1, "phone", 1)
@@ -34,11 +33,14 @@ class OrderHandlerTest {
     }
 
     @Test
-    @Order(2)
-    fun fetchOrder() {
-        var expected = listOf(OrderEntity(1, "phone", 1))
+    fun fetchOrders() {
+        val order = OrderPostDto("phone", 1, 1)
+        mockMvc.post("/api/order") {
+            content = jacksonObjectMapper().writeValueAsString(order)
+            contentType = MediaType.APPLICATION_JSON
+        }
         mockMvc.get("/api/order")
+            .andExpect { content { status { is2xxSuccessful() } } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
-            .andExpect { content { string(jacksonObjectMapper().writeValueAsString(expected)) } }
     }
 }
