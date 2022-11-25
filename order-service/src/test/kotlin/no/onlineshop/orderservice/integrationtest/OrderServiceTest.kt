@@ -21,7 +21,7 @@ class OrderServiceTest {
 
     @Test
     fun addOrderTest() {
-        val order = OrderPostDto("phone", 1, 1)
+        val order = OrderPostDto("phone", 1)
         val expected = OrderEntity(1, "phone", 1)
         mockMvc.post("/api/order") {
             content = jacksonObjectMapper().writeValueAsString(order)
@@ -34,12 +34,15 @@ class OrderServiceTest {
 
     @Test
     fun fetchOrders() {
-        val order = OrderPostDto("phone", 1, 1)
+        val order = OrderPostDto("phone", 1)
         mockMvc.post("/api/order") {
             content = jacksonObjectMapper().writeValueAsString(order)
             contentType = MediaType.APPLICATION_JSON
         }
-        mockMvc.get("/api/order")
+        mockMvc.get("/api/order"){
+            param("pageSize", "5")
+            param("pageNumber", "0")
+        }
             .andExpect { content { status { is2xxSuccessful() } } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
     }

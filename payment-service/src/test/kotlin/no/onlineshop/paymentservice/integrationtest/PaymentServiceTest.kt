@@ -44,7 +44,7 @@ class PaymentServiceTest {
 
     @Test
     fun createPayment() {
-        val payment = PaymentCreateDto(1, 1)
+        val payment = PaymentCreateDto(1)
         val objectMapper = jacksonObjectMapper()
         wiremockServer.stubFor(
             get(urlEqualTo("/api/order/${payment.orderId}/exists"))
@@ -64,7 +64,10 @@ class PaymentServiceTest {
 
     @Test
     fun fetchAllPayments() {
-        mockMvc.get(paymentEndpoint)
+        mockMvc.get(paymentEndpoint) {
+            param("pageSize", "5")
+            param("pageNumber", "0")
+        }
             .andExpect { status { is2xxSuccessful() } }
             .andExpect { content { contentType(MediaType.APPLICATION_JSON) } }
     }
