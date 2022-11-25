@@ -27,8 +27,10 @@ To run all tests:
 ```
 mvn clean verify
 ```
+Notice that there will be some exceptions in the logs, but this is just Eureka trying to connect. This does not affect test results. 
 
-If you want to run locally on your own machine, remember to use active profile `local`. You can then start db and RabbitMQ with 
+
+If you want to run locally on your own machine, remember to use active profile `local`. Would then recommend using "services" in IntelliJ. You can then start db and RabbitMQ solo with: 
 
 `docker-compose --profile local up`
 
