@@ -7,6 +7,7 @@ import no.onlineshop.orderservice.models.OrderEntity
 import no.onlineshop.orderservice.models.OrderPostDto
 import no.onlineshop.orderservice.repository.OrderRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -14,8 +15,8 @@ class OrderHandler(
     @Autowired private val orderRepository: OrderRepository,
     @Autowired private val rabbitSender: RabbitSender
 ) {
-    fun fetchAllOrders(): List<OrderEntity> {
-        return orderRepository.findAll()
+    fun fetchAllOrders(pageSize: Int, pageNumber: Int): List<OrderEntity> {
+        return orderRepository.findAll(Pageable.ofSize(pageSize).withPage(pageNumber)).toList()
     }
 
     fun addNewOrder(newOrder: OrderPostDto): OrderEntity {

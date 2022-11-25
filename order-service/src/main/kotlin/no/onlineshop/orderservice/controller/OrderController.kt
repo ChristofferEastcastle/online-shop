@@ -14,8 +14,8 @@ class OrderController(
 ) {
 
     @GetMapping
-    fun fetchAllOrders(): ResponseEntity<List<OrderEntity>>{
-        return ResponseEntity.ok(orderHandler.fetchAllOrders())
+    fun fetchAllOrders(@RequestParam pageSize: Int, pageNumber: Int): ResponseEntity<List<OrderEntity>>{
+        return ResponseEntity.ok(orderHandler.fetchAllOrders(pageSize, pageNumber))
     }
 
     @PostMapping
