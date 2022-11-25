@@ -9,6 +9,10 @@ class RabbitSender(@Autowired private val rabbitTemplate: RabbitTemplate) {
 
     fun sendMessage(message: String, queue: String) {
         println("sending message: $message")
-        rabbitTemplate.convertAndSend(queue, message)
+        try {
+            rabbitTemplate.convertAndSend(queue, message)
+        } catch (ex: RuntimeException){
+            println(ex.message)
+        }
     }
 }

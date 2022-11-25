@@ -37,3 +37,7 @@ In a real life scenario/production env I would like to implement an authenticati
 For this submission we will be operating in a "logged in" state as a regular user/shopper.
 
 For doing api requests I have added a Postman collection `postman_collection.json` which you can import.
+
+The flow is like this:
+
+Add order `POST /api/order` -> Pay that order `POST /api/payment` -> The payment service will now inform order-service that payment is done. The order-service will then notify shipping-service of payment and will then ship it.
