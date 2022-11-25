@@ -2,6 +2,7 @@ package no.onlineshop.orderservice.services
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.onlineshop.orderservice.exceptions.OrderException
+import no.onlineshop.orderservice.exceptions.OrderUpdateException
 import no.onlineshop.orderservice.integration.RabbitSender
 import no.onlineshop.orderservice.models.OrderEntity
 import no.onlineshop.orderservice.models.OrderPostDto
@@ -27,7 +28,7 @@ class OrderHandler(
         val savedOrder = orderRepository.save(orderEntity)
         savedOrder.id?.let {
             val message = Message(it, Action.WAIT_PAYMENT, "new order with id ${savedOrder.id} placed. Waiting for payment..")
-            rabbitSender.sendMessage(jacksonObjectMapper().writeValueAsString(message))
+            rabbitSender.sendMessage(jacksonObjectMapper().writeValueAsString(message), "order_queue")
             return savedOrder
         }
         throw OrderException("Could not store order")
@@ -35,6 +36,42 @@ class OrderHandler(
 
     fun orderExists(id: Long): Boolean {
         return orderRepository.existsById(id)
+    }
+
+    fun updateOrderToPaid(id: Long): OrderEntity {
+        val optional = orderRepository.findById(id)
+        if (optional.isPresent) {
+            val orderEntity = optional.get()
+            val updated = OrderEntity(
+                id = orderEntity.id,
+                type = orderEntity.type,
+                qty = orderEntity.qty,
+                isPaid = true,
+                isShipped = orderEntity.isShipped
+            )
+            return orderRepository.save(updated)
+        }
+        throw OrderUpdateException("Could not update, the order does not exist!")
+    }
+
+    fun updateOrderToShipped(id: Long) {
+        val optional = orderRepository.findById(id)
+        if (optional.isPresent) {
+            val orderEntity = optional.get()
+            val updated = OrderEntity(
+                id = orderEntity.id,
+                type = orderEntity.type,
+                qty = orderEntity.qty,
+                isPaid = orderEntity.isPaid,
+                isShipped = true
+            )
+            orderRepository.save(updated)
+        }
+    }
+
+    fun tellShippingService(id: Long) {
+        val message = Message(id, Action.PAYMENT, "Order with id $id has been paid. Time to ship it!")
+        rabbitSender.sendMessage(jacksonObjectMapper().writeValueAsString(message), "order_queue")
     }
 }
 
@@ -45,5 +82,7 @@ data class Message(
 )
 
 enum class Action{
-    WAIT_PAYMENT
+    WAIT_PAYMENT,
+    PAYMENT,
+    SHIPPED
 }

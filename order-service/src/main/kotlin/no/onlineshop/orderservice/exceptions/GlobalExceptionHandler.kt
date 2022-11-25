@@ -12,4 +12,10 @@ class GlobalExceptionHandler {
         println("ERROR: " + ex.message)
         return ResponseEntity.internalServerError().body(ex.message)
     }
+
+    @ExceptionHandler(value = [OrderUpdateException::class])
+    fun orderUpdateException(ex: OrderUpdateException): ResponseEntity<String> {
+        println("ERROR: " + ex.message)
+        return ResponseEntity.badRequest().body(ex.message)
+    }
 }

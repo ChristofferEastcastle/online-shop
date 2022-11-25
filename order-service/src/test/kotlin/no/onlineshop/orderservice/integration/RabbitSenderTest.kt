@@ -93,7 +93,7 @@ class RabbitSenderTest(
         val printStream = System.out
         val stream = ByteArrayOutputStream()
         System.setOut(PrintStream(stream))
-        rabbitSender.sendMessage("test")
+        rabbitSender.sendMessage("test", "order_queue")
         val mappedPort = paymentService.getMappedPort(8091)
         val res = URL("http://localhost:$mappedPort/api/payment").readText()
         System.setOut(printStream)
