@@ -1,0 +1,67 @@
+version: '3.1'
+services:
+  rabbitmq:
+    image: rabbitmq:3.11.3-management-alpine
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - ./rabbitmq-config/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ./rabbitmq-config/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+    profiles:
+      - online-shop
+      - rabbit
+      - local
+  discovery-service:
+    image: 'discovery-service'
+    ports:
+      - '8761:8761'
+    profiles:
+      - online-shop
+      - service
+  gateway-service:
+
+    image: 'gateway-service'
+    ports:
+      - '8080:8080'
+    profiles:
+      - online-shop
+      - service
+  order-service:
+
+    image: 'order-service'
+    ports:
+      - '8090:8090'
+    profiles:
+      - online-shop
+      - service
+  payment-service:
+
+    image: 'payment-service'
+    ports:
+      - '8091:8091'
+    profiles:
+      - online-shop
+      - service
+  shipping-service:
+
+    image: 'shipping-service'
+    ports:
+      - '8092:8092'
+    profiles:
+      - online-shop
+      - service
+  database:
+
+    image: postgres:alpine
+    profiles:
+      - online-shop
+      - database
+      - local
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/db.sql
