@@ -1,0 +1,25 @@
+app:
+  order-service:
+    baseurl: http://order-service
+server:
+  port: 8092
+spring:
+  rabbitmq:
+    host: rabbit-mq
+  application:
+    name: shipping-service
+  datasource:
+    url: jdbc:postgresql://database:5432/shipping_service
+    username: postgres
+    password: postgres123
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/

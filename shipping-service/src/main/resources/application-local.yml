@@ -1,0 +1,30 @@
+app:
+  order-service:
+    baseurl: http://localhost:8080
+server:
+  port: 8092
+spring:
+  rabbitmq:
+    host: localhost
+  application:
+    name: shipping-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shipping_service
+    username: postgres
+    password: postgres123
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+    show-sql: true
+  flyway:
+    enabled: false
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/

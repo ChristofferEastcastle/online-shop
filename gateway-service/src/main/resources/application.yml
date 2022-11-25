@@ -12,6 +12,10 @@ spring:
           uri: lb://payment-service
           predicates:
             - Path=/api/payment/**
+        - id: shipping-service
+          uri: lb://shipping-service
+          predicates:
+            - Path=/api/shipping/**
 server:
   port: 8080
 

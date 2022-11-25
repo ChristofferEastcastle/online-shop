@@ -45,6 +45,14 @@ services:
     profiles:
       - online-shop
       - service
+  shipping-service:
+    container_name: 'shipping-service'
+    image: 'shipping-service'
+    ports:
+      - '8092:8092'
+    profiles:
+      - online-shop
+      - service
   database:
     container_name: 'database'
     image: postgres:alpine

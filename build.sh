@@ -12,3 +12,5 @@ SERVICE=order-service
 docker build -t $SERVICE -f $SERVICE/Dockerfile $SERVICE
 SERVICE=payment-service
 docker build -t $SERVICE -f $SERVICE/Dockerfile $SERVICE
+SERVICE=shipping-service
+docker build -t $SERVICE -f $SERVICE/Dockerfile $SERVICE
