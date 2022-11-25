@@ -41,3 +41,6 @@ For doing api requests I have added a Postman collection `postman_collection.jso
 The flow is like this:
 
 Add order `POST /api/order` -> Pay that order `POST /api/payment` -> The payment service will now inform order-service that payment is done. The order-service will then notify shipping-service of payment and will then ship it.
+
+The one thing really bugging me was that I could not get testcontainers to work. I tested with multiple different approaches, from googling different resources and also this [repo](https://github.com/arcuri82/testing_security_development_enterprise_systems).\
+You can have a look at my different approaches in the folder `unimplemented`.
