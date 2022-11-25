@@ -1,3 +1,3 @@
 package no.onlineshop.orderservice.models
 
-data class OrderPostDto(val type: String, val qty: Int, val userId: Long)
+data class OrderPostDto(val type: String, val qty: Int)

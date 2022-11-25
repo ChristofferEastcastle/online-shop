@@ -12,8 +12,5 @@ class PaymentEntity (
     var id: Long? = null,
     @Column(name = "order_id")
     @NotNull
-    var orderId: Long,
-    @Column(name = "user_id")
-    @NotNull
-    var userId: Long
+    var orderId: Long
 )

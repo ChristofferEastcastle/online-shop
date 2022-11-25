@@ -1,6 +1,6 @@
 package no.onlineshop.paymentservice.controller
 
-import no.onlineshop.paymentservice.integrationtest.PaymentHandler
+import no.onlineshop.paymentservice.services.PaymentHandler
 import no.onlineshop.paymentservice.models.PaymentCreateDto
 import no.onlineshop.paymentservice.models.PaymentEntity
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,8 +19,8 @@ class PaymentController(
 ) {
 
     @GetMapping
-    fun fetchAllPayments(): ResponseEntity<List<PaymentEntity>> {
-        return ResponseEntity.ok(paymentHandler.fetchAllPayments())
+    fun fetchAllPayments(@RequestParam pageSize: Int, @RequestParam pageNumber: Int): ResponseEntity<List<PaymentEntity>> {
+        return ResponseEntity.ok(paymentHandler.fetchAllPayments(pageSize, pageNumber))
     }
 
     @PostMapping

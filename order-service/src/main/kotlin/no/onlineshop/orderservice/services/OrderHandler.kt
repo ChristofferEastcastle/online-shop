@@ -1,4 +1,4 @@
-package no.onlineshop.orderservice.integrationtest
+package no.onlineshop.orderservice.services
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.onlineshop.orderservice.exceptions.OrderException
@@ -25,7 +25,7 @@ class OrderHandler(
         )
         val savedOrder = orderRepository.save(orderEntity)
         savedOrder.id?.let {
-            val message = Message(newOrder.userId, it, Action.WAIT_PAYMENT, "new order with id ${savedOrder.id} placed. Waiting for payment..")
+            val message = Message(it, Action.WAIT_PAYMENT, "new order with id ${savedOrder.id} placed. Waiting for payment..")
             rabbitSender.sendMessage(jacksonObjectMapper().writeValueAsString(message))
             return savedOrder
         }
@@ -38,7 +38,6 @@ class OrderHandler(
 }
 
 data class Message(
-    val userId: Long,
     val orderId: Long,
     val action: Action,
     val message: String,
